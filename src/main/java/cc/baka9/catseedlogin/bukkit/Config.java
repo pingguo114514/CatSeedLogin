@@ -224,6 +224,7 @@ public class Config {
         public static String EmailPassword;
         public static String EmailSmtpHost;
         public static String EmailSmtpPort;
+        public static String EmailSmtpAccount;
         public static boolean SSLAuthVerify;
         public static String FromPersonal;
 
@@ -235,6 +236,7 @@ public class Config {
             EmailPassword = config.getString("EmailPassword");
             EmailSmtpHost = config.getString("EmailSmtpHost");
             EmailSmtpPort = config.getString("EmailSmtpPort");
+            EmailSmtpAccount = config.getString("EmailSmtpAccount");
             SSLAuthVerify = config.getBoolean("SSLAuthVerify");
             FromPersonal = config.getString("FromPersonal");
 

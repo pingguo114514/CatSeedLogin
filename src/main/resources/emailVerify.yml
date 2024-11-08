@@ -3,5 +3,6 @@ EmailAccount: "763737569@qq.com"
 EmailPassword: "123456"
 EmailSmtpHost: "smtp.qq.com"
 EmailSmtpPort: "465"
+EmailSmtpAccount: "763737569@qq.com"
 SSLAuthVerify: true
 FromPersonal: "xxx服务器"

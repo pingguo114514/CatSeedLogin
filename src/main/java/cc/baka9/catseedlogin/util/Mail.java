@@ -16,7 +16,7 @@ public class Mail {
         Email email = new HtmlEmail();
         email.setHostName(Config.EmailVerify.EmailSmtpHost);
         email.setSmtpPort(Integer.parseInt(Config.EmailVerify.EmailSmtpPort));
-        email.setAuthenticator(new DefaultAuthenticator(Config.EmailVerify.EmailAccount, Config.EmailVerify.EmailPassword));
+        email.setAuthenticator(new DefaultAuthenticator(Config.EmailVerify.EmailSmtpAccount, Config.EmailVerify.EmailPassword));
         if (Config.EmailVerify.SSLAuthVerify) {
             email.setSSLOnConnect(true);
             email.setSSLCheckServerIdentity(true);
