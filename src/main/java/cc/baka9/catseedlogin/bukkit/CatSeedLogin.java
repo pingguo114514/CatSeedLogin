@@ -13,16 +13,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import cc.baka9.catseedlogin.bukkit.command.CommandBindEmail;
-import cc.baka9.catseedlogin.bukkit.command.CommandCatSeedLogin;
-import cc.baka9.catseedlogin.bukkit.command.CommandChangePassword;
-import cc.baka9.catseedlogin.bukkit.command.CommandLogin;
-import cc.baka9.catseedlogin.bukkit.command.CommandRegister;
-import cc.baka9.catseedlogin.bukkit.command.CommandResetPassword;
-import cc.baka9.catseedlogin.bukkit.database.Cache;
-import cc.baka9.catseedlogin.bukkit.database.MySQL;
-import cc.baka9.catseedlogin.bukkit.database.SQL;
-import cc.baka9.catseedlogin.bukkit.database.SQLite;
+import cc.baka9.catseedlogin.bukkit.command.*;
+import cc.baka9.catseedlogin.bukkit.database.*;
 import cc.baka9.catseedlogin.bukkit.object.LoginPlayerHelper;
 import cc.baka9.catseedlogin.bukkit.task.Task;
 import cn.handyplus.lib.adapter.HandySchedulerUtil;
@@ -140,8 +132,7 @@ public class CatSeedLogin extends JavaPlugin implements Listener {
             return Collections.emptyList();
         });
 
-        PluginCommand catseedlogin = getServer().getPluginCommand("catseedlogin");
-        catseedlogin.setExecutor(new CommandCatSeedLogin());
+        getServer().getPluginCommand("catseedlogin").setExecutor(new CommandCatSeedLogin());
     }
 
     @EventHandler
@@ -163,14 +154,15 @@ public class CatSeedLogin extends JavaPlugin implements Listener {
     public void onDisable() {
         Task.cancelAll();
         Bukkit.getOnlinePlayers().forEach(p -> {
-            if (!LoginPlayerHelper.isLogin(p.getName())) return;
-            if (!p.isDead() || Config.Settings.DeathStateQuitRecordLocation) {
+            if (LoginPlayerHelper.isLogin(p.getName()) && (!p.isDead() || Config.Settings.DeathStateQuitRecordLocation)) {
                 Config.setOfflineLocation(p);
             }
         });
 
         try {
-            sql.getConnection().close();
+            if (sql.getConnection() != null) { 
+                sql.getConnection().close();
+            }
         } catch (Exception e) {
             getLogger().warning("获取数据库连接时出错");
             e.printStackTrace();
@@ -180,6 +172,8 @@ public class CatSeedLogin extends JavaPlugin implements Listener {
     }
 
     public void runTaskAsync(Runnable runnable) {
-        CatScheduler.runTaskAsync(runnable);
+        if (runnable != null) {  
+            CatScheduler.runTaskAsync(runnable);
+        }
     }
 }
